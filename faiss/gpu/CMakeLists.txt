@@ -171,4 +171,9 @@ foreach(header ${FAISS_GPU_HEADERS})
 endforeach()
 
 find_package(CUDAToolkit REQUIRED)
-target_link_libraries(faiss PRIVATE CUDA::cudart CUDA::cublas)
+
+if(NOT FAISS_USE_CUDA_TOOLKIT_STATIC)
+  target_link_libraries(faiss PRIVATE CUDA::cudart CUDA::cublas)
+else()
+  target_link_libraries(faiss PRIVATE CUDA::cudart_static CUDA::cublas_static)
+endif()
